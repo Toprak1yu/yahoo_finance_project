@@ -11,9 +11,9 @@ Features:
 - Stores data in SQLite database for efficient querying
 - Provides download progress and error reporting
 
-Author: [Your Name]
+Author: Aziz Toprak Yilmaz
 Created: July 2025
-License: MIT
+
 """
 
 import yfinance as yf
@@ -50,10 +50,6 @@ def get_yahoo_data(symbols, start_date, end_date):
     dict
         A dictionary with stock symbols as keys and their historical data (pandas DataFrame) as values
         
-    Example:
-    --------
-    >>> data = get_yahoo_data(['AKBNK.IS'], '2023-01-01', '2023-12-31')
-    >>> print(data['AKBNK.IS'].head())
     """
     all_data = {}
     successful_downloads = 0
@@ -161,15 +157,3 @@ except sqlite3.Error as e:
     print(f"SQLite error: {e}")
     print("Failed to save data to database.")
 
-print("\n" + "="*50)
-print("SCRIPT EXECUTION COMPLETED")
-print("="*50)
-print("Files created:")
-print("1. bist100_closing_prices.csv - Historical closing prices")
-print("2. finance_data.db - SQLite database with stock data")
-print("\nYou can now use this data for:")
-print("- Technical analysis")
-print("- Portfolio optimization")
-print("- Risk assessment")
-print("- Machine learning models")
-print("="*50)
