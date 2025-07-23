@@ -3,7 +3,7 @@ import pandas as pd
 import sqlite3
 import time
 from datetime import datetime
-from arg_parse import parse_args
+from arg_parse import Arguments
 from setup_log import setup_logging
 from company_class import Company
 
@@ -11,7 +11,7 @@ from company_class import Company
 setup_logging()
 logger = logging.getLogger(__name__)
 
-def main():
+def main(arguments: Arguments):
 
     # Database connection
     try:
@@ -20,13 +20,11 @@ def main():
     except Exception as e:
         logger.error(f"Error connecting to database: {e}")
         conn = None
-    # Parse command line arguments
-    args = parse_args()
     
     # Load stock symbols
     try:
-        if args.symbols:
-            symbols = args.symbols
+        if arguments.symbols:
+            symbols = arguments.symbols
             logger.info(f"Processing {len(symbols)} stock symbol: {symbols}")
         else:
             # Load all symbols from CSV
@@ -40,16 +38,12 @@ def main():
     company_classes = {} # Dictionary to hold Company instances
     # Main loop - process each stock symbol
     for symbol in symbols:
-        # Skip problematic symbols
-        if symbol in ['DOAS.IS', 'TURSG.IS', 'GLCVY.IS', 'ISBIR.IS']:
-            logger.info(f'Skipping problematic symbol: {symbol}')
-            continue
         # Process company data
         try:
             logger.info(f"Processing data for {symbol}")
             today= datetime.now().strftime('%y-%m-%d')
-            company = Company(symbol, args.start if args.start else '2020-01-01',
-                              args.end if args.end else today)
+            company = Company(symbol, arguments.start if arguments.start else '2020-01-01',
+                              arguments.end if arguments.end else today)
             company_classes[symbol] = company
             data = company.get_all_data()
         except Exception as e:
@@ -77,5 +71,6 @@ def main():
         conn.close()
 
 if __name__ == "__main__":
-    main()
+    arguments = Arguments()
+    main(arguments)
     logger.info("Script completed successfully")
