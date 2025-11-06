@@ -38,7 +38,7 @@ python-dateutil>=2.8.0
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/username/yahoo_finance.git
+git clone https://github.com/Toprak1yu/yahoo_finance.git
 cd yahoo_finance/finance_project
 ```
 
